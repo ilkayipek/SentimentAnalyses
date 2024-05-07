@@ -1,0 +1,52 @@
+
+    <div class="card mb-5 mt-5" >
+        {% if post.url %}
+            <img src="{{ post.url }}" class="card-img-top img-fluid" style="max-height: 600px;" alt="...">
+        {% elif post.video_url %}
+            <video src="{{ post.video_url }}" class="object-fit-contain" autoplay></video>
+        {% endif %}
+
+
+        <div class="card-body">
+            <h5 class="card-title">@{{ post.owner_username }}</h5>
+            <p class="card-text">{{ post.date_local }}</p>
+            <p class="card-text"><small class="text-body-secondary">{{ post.caption }}</small></p>
+            <h4>Toplam Yorum Sayısı</h4>
+            <p class="card-text"><small class="text-body-secondary">{{ post.comments }}</small></p>
+            <h5>Pozitif Sayısı</h5>
+            <p class="card-text"><small class="text-body-secondary">{{ dataResult.positive }}</small></p>
+            <h5>Negatif Sayısı</h5>
+            <p class="card-text"><small class="text-body-secondary">{{ dataResult.negative }}</small></p>
+            <h5>Nötr Sayısı</h5>
+            <p class="card-text"><small class="text-body-secondary">{{ dataResult.neutral }}</small></p>
+            <h5>Oran</h5>
+            <p class="card-text"><small class="text-body-secondary">%{{ dataResult.ratio }}</small></p>
+        </div>
+        <h3>İlk 10 Yorum</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Yorum</th>
+              <th scope="col">Etiketi</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>

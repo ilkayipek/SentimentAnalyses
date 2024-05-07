@@ -1,0 +1,75 @@
+ {% extends 'Layout.html' %}
+
+{% block pageTitle %}
+Ana Sayfa
+{% endblock %}
+
+ {% block content %}
+     <div class="container mt-5 ">
+
+    <div class="row justify-content-center">
+        <div class="col-6" >
+            <h2 style="alignment: center">İnstagram Gönderinize Duygu Analizi Yapın</h2>
+            <div class=" mt-5">
+                <form class="d-flex" id="sentimentAnalyseForm" role="search"  method="post">
+               {% csrf_token %}
+                <input class="form-control me-2" type="search" name="veri" placeholder="instagram url linki giriniz" aria-label="Search">
+                <button class="btn btn-primary btn-lg" type="submit">Başla</button>
+            </form>
+            </div>
+        </div>
+     <div class="col-7" id="analyseResult">
+
+     </div>
+        <div class="col-7" >
+            <div id="loadingSpinner" class="container mt-5" style="display: none;">
+                <div class="container mt-5">
+                    <div class="row justify-content-center">
+                             <div class="spinner-grow text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                                 <p>Analiz Ediliyor..</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function(){
+    $('#sentimentAnalyseForm').submit(function(event){
+        event.preventDefault(); // Formun normal submit işlemini engelle
+        var formData = $(this).serialize(); // Form verisini al
+         // Giriş alanını temizle
+        // Spinner'ı göster
+
+        $('#analyseResult').html('');
+          $('#loadingSpinner').show();
+        $.ajax({
+            type: 'POST',
+            url: '{% url "verigetir" %}', // Veri getirme URL'si
+            data: formData,
+            beforeSend: function() {
+                // AJAX isteği gönderilmeden önce burası çalışır
+                $('#loadingSpinner').show();
+            },
+            success: function(response){
+                // Gelen HTML bloğunu göster
+                $('#analyseResult').html(response);
+            },
+            complete: function() {
+                // AJAX isteği tamamlandığında burası çalışır
+                // Spinner'ı gizle
+                $('#loadingSpinner').hide();
+            }
+        });
+    });
+});
+
+    </script>
+    </div>
+</div>
+ {% endblock %}
